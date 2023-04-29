@@ -9,6 +9,7 @@ session_start();
 try {
     if (isset($_POST['fullname'])) {
         $_SESSION['user_fullname'] = $_POST['fullname'];
+        $_SESSION['email'] = $_POST['email'];
         $_SESSION['user_gender'] = $_POST['gender'];
 
         header('Location: quiz.php');

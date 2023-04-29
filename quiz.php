@@ -24,9 +24,16 @@ try {
         $number = 1;
     }
 
-    if (isset($_POST['answer'])) {
-        $_SESSION['answers'][$number] = $_POST['answer'];
-        $number++;
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Loop through all the questions and save answers in session
+        for($i = 1; $i <= 10; $i++) {
+            if (isset($_POST['answer'.$i])) {
+                $_SESSION['answers'][$i] = $_POST['answer'.$i];
+            }
+        }
+        // Redirect to result.php after submitting answers
+        header("Location: result.php");
+        exit;
     }
 
     // Has user answered all items
@@ -38,7 +45,7 @@ try {
     // Marker for question number
     $_SESSION['current_question_number'] = $number++;
 
-    
+    $question = $manager->retrieveQuestion($number);
 } catch (Exception $e) {
     echo '<h1>An error occurred:</h1>';
     echo '<p>' . $e->getMessage() . '</p>';
